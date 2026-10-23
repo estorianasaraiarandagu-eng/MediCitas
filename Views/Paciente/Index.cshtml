@@ -1,0 +1,46 @@
+using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
+using MediCitas.Models;
+using System.Collections.Generic;
+
+namespace MediCitas.Controllers
+{
+    public class PacienteController : Controller
+    {
+        private readonly string _connectionString;
+
+        public PacienteController(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "";
+        }
+
+        // Listar pacientes
+        public IActionResult Index()
+        {
+            List<Paciente> lista = new List<Paciente>();
+
+            using (var conexion = new MySqlConnection(_connectionString))
+            {
+                conexion.Open();
+                string query = "SELECT id_paciente, nombre, telefono FROM paciente";
+                using (var cmd = new MySqlCommand(query, conexion))
+                {
+                    using (var lector = cmd.ExecuteReader())
+                    {
+                        while (lector.Read())
+                        {
+                            lista.Add(new Paciente
+                            {
+                                IdPaciente = lector.GetInt32("id_paciente"),
+                                Nombre = lector.GetString("nombre"),
+                                Telefono = lector.GetString("telefono")
+                            });
+                        }
+                    }
+                }
+            }
+
+            return View(lista);
+        }
+    }
+}
