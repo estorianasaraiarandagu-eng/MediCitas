@@ -1,0 +1,27 @@
+@model MediCitas.Models.Paciente
+
+@{
+    ViewData["Title"] = "Editar Paciente";
+}
+
+<div class="container mt-4">
+    <h2>Editar Paciente</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" name="id" value="@Model.IdPaciente" />
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="@Model.Nombre" required />
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" value="@Model.Telefono" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>

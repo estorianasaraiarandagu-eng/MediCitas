@@ -1,46 +1,45 @@
-using Microsoft.AspNetCore.Mvc;
-using MySqlConnector;
-using MediCitas.Models;
-using System.Collections.Generic;
+@model IEnumerable<MediCitas.Models.Paciente>
 
-namespace MediCitas.Controllers
-{
-    public class PacienteController : Controller
-    {
-        private readonly string _connectionString;
-
-        public PacienteController(IConfiguration configuration)
-        {
-            _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "";
-        }
-
-        // Listar pacientes
-        public IActionResult Index()
-        {
-            List<Paciente> lista = new List<Paciente>();
-
-            using (var conexion = new MySqlConnection(_connectionString))
-            {
-                conexion.Open();
-                string query = "SELECT id_paciente, nombre, telefono FROM paciente";
-                using (var cmd = new MySqlCommand(query, conexion))
-                {
-                    using (var lector = cmd.ExecuteReader())
-                    {
-                        while (lector.Read())
-                        {
-                            lista.Add(new Paciente
-                            {
-                                IdPaciente = lector.GetInt32("id_paciente"),
-                                Nombre = lector.GetString("nombre"),
-                                Telefono = lector.GetString("telefono")
-                            });
-                        }
-                    }
-                }
-            }
-
-            return View(lista);
-        }
-    }
+@{
+    ViewData["Title"] = "Gestión de Pacientes";
 }
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listado de Pacientes</h2>
+        <a asp-action="Create" class="btn btn-primary">+ Registrar Nuevo Paciente</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">No hay pacientes registrados actualmente.</div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover table-bordered shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Teléfono</th>
+                    <th class="text-center" style="width: 25%;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.IdPaciente</td>
+                        <td>@p.Nombre</td>
+                        <td>@p.Telefono</td>
+                        <td class="text-center">
+                            <a asp-action="Details" asp-route-id="@p.IdPaciente" class="btn btn-info btn-sm">Ver</a>
+                            <a asp-action="Edit" asp-route-id="@p.IdPaciente" class="btn btn-warning btn-sm">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@p.IdPaciente" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
