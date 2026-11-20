@@ -1,0 +1,36 @@
+@model IEnumerable<MediCitas.Models.EspecialidadResumen>
+
+@{
+    ViewData["Title"] = "Especialidades Médicas";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🏥 Directorio de Especialidades Médicas</h2>
+    </div>
+
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm border-0 h-100" style="border-top: 4px solid #5ccda7 !important;">
+                        <div class="card-body">
+                            <h4 class="card-title text-success fw-bold">@item.Especialidad</h4>
+                            <p class="text-muted mb-2"><strong>Doctores disponibles:</strong> @item.CantidadDoctores</p>
+                            <hr />
+                            <p class="card-text"><strong>Médicos:</strong> @item.DoctoresNombres</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info text-center">No hay especialidades registradas en el sistema.</div>
+            </div>
+        }
+    </div>
+</div>

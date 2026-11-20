@@ -1,0 +1,50 @@
+@model MediCitas.Models.ConsultaMedica
+
+@{
+    ViewData["Title"] = "Atender Cita Médica";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-success text-white py-3">
+                    <h4 class="mb-0">🩺 Consulta Médica y Receta</h4>
+                </div>
+                <div class="card-body p-4 bg-light">
+                    <div class="mb-3 p-3 bg-white rounded shadow-sm">
+                        <p class="mb-1"><strong>Paciente:</strong> @Model.NombrePaciente</p>
+                        <p class="mb-1"><strong>Médico:</strong> @Model.NombreMedico</p>
+                        <p class="mb-0"><strong>Fecha de Cita:</strong> @Model.FechaCita.ToString("dd/MM/yyyy HH:mm")</p>
+                    </div>
+
+                    <form asp-action="Atender" method="post">
+                        <input type="hidden" asp-for="IdCita" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Diagnóstico *</label>
+                            <textarea asp-for="Diagnostico" class="form-control" rows="3" required placeholder="Escriba el diagnóstico clínico..."></textarea>
+                            <span asp-validation-for="Diagnostico" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Receta Médica *</label>
+                            <textarea asp-for="Receta" class="form-control" rows="3" required placeholder="Medicamentos, dosis y frecuencia..."></textarea>
+                            <span asp-validation-for="Receta" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Observaciones</label>
+                            <textarea asp-for="Observaciones" class="form-control" rows="2" placeholder="Indicaciones adicionales..."></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="IndexAgendadas" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-success px-4">Finalizar y Guardar Consulta</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

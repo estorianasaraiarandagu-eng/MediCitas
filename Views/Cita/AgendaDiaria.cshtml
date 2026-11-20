@@ -1,0 +1,81 @@
+@model IEnumerable<MediCitas.Models.Cita>
+
+@{
+    ViewData["Title"] = "Agenda Diaria";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">📅 Agenda Diaria por Médico</h2>
+
+    <!-- Filtros -->
+    <form method="get" class="row g-3 mb-4 p-3 bg-white shadow-sm rounded">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Seleccionar Fecha</label>
+            <input type="date" name="fecha" class="form-control" value="@ViewBag.FechaSeleccionada" />
+        </div>
+        <div class="col-md-5">
+            <label class="form-label fw-bold">Filtrar por Médico</label>
+            <select name="idMedico" class="form-select">
+                <option value="">-- Todos los Médicos --</option>
+                @if (ViewBag.Medicos != null)
+                {
+                    foreach (var med in ViewBag.Medicos)
+                    {
+                        bool seleccionado = ViewBag.MedicoSeleccionado != null && (int)ViewBag.MedicoSeleccionado == med.IdMedico;
+                        <option value="@med.IdMedico" selected="@seleccionado">@med.Nombre</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-success w-100">Filtrar Agenda</button>
+        </div>
+    </form>
+
+    <!-- Listado -->
+    <div class="table-responsive bg-white p-3 shadow-sm rounded">
+        <table class="table table-hover align-middle">
+            <thead class="table-success">
+                <tr>
+                    <th>Hora</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.FechaHora.ToString("HH:mm")</td>
+                            <td>@item.NombrePaciente</td>
+                            <td>@item.NombreMedico</td>
+                            <td>@item.Motivo</td>
+                            <td>
+                                <span class="badge @(item.Estado == "Atendida" ? "bg-success" : (item.Estado == "Cancelada" ? "bg-danger" : "bg-warning text-dark"))">
+                                    @item.Estado
+                                </span>
+                            </td>
+                            <td>
+                                @if (item.Estado == "Agendada")
+                                {
+                                    <a asp-action="Atender" asp-route-id="@item.IdCita" class="btn btn-sm btn-primary">Atender</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">No hay citas programadas para esta fecha y filtro.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

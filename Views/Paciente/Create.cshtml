@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Registrar Paciente";
+}
+
+<div class="container mt-4">
+    <h2>Registrar Nuevo Paciente</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required />
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required />
+                </div>
+                <button type="submit" class="btn btn-success">Guardar Paciente</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>

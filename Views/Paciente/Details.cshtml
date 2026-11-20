@@ -1,0 +1,19 @@
+@model MediCitas.Models.Paciente
+
+@{
+    ViewData["Title"] = "Detalles del Paciente";
+}
+
+<div class="container mt-4">
+    <h2>Detalles del Paciente</h2>
+    <hr />
+    <div class="card col-md-6 shadow-sm">
+        <div class="card-body">
+            <p><strong>ID:</strong> @Model.IdPaciente</p>
+            <p><strong>Nombre Completo:</strong> @Model.Nombre</p>
+            <p><strong>Teléfono:</strong> @Model.Telefono</p>
+            <a asp-action="Edit" asp-route-id="@Model.IdPaciente" class="btn btn-warning">Editar</a>
+            <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+        </div>
+    </div>
+</div>

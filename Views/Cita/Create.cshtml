@@ -1,0 +1,80 @@
+@model MediCitas.Models.Cita
+
+@{
+    ViewData["Title"] = "Agendar Nueva Cita";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-success text-white py-3">
+                    <h4 class="mb-0">📅 Agendar Nueva Cita Médica</h4>
+                </div>
+                <div class="card-body p-4" style="background-color: #fafbfc;">
+                    <form asp-action="Create" method="post">
+                        
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Paciente -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Paciente</label>
+                            <select asp-for="IdPaciente" class="form-select" required>
+                                <option value="">-- Seleccione un Paciente ----</option>
+                                @if (ViewBag.Pacientes != null)
+                                {
+                                    foreach (var paciente in ViewBag.Pacientes)
+                                    {
+                                        <option value="@paciente.IdPaciente">@paciente.Nombre</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="IdPaciente" class="text-danger"></span>
+                        </div>
+
+                        <!-- Médico -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Médico y Especialidad</label>
+                            <select asp-for="IdMedico" class="form-select" required>
+                                <option value="">-- Seleccione un Médico --</option>
+                                @if (ViewBag.Medicos != null)
+                                {
+                                    foreach (var medico in ViewBag.Medicos)
+                                    {
+                                        <option value="@medico.IdMedico">@medico.Nombre</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="IdMedico" class="text-danger"></span>
+                        </div>
+
+                        <!-- Fecha y Hora (Corregido para evitar errores de validación del navegador) -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Fecha y Hora de la Cita</label>
+                            <input asp-for="FechaHora" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+                            <span asp-validation-for="FechaHora" class="text-danger"></span>
+                        </div>
+
+                        <!-- Motivo -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Motivo de la Consulta</label>
+                            <textarea asp-for="Motivo" class="form-control" rows="3" placeholder="Describa los síntomas o motivo de la visita..."></textarea>
+                            <span asp-validation-for="Motivo" class="text-danger"></span>
+                        </div>
+
+                        <!-- Botones de Acción -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="IndexAgendadas" class="btn btn-secondary">Volver</a>
+                            <button type="submit" class="btn btn-success px-4">Guardar y Agendar Cita</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,45 @@
+@model IEnumerable<MediCitas.Models.Paciente>
+
+@{
+    ViewData["Title"] = "Gestión de Pacientes";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listado de Pacientes</h2>
+        <a asp-action="Create" class="btn btn-primary">+ Registrar Nuevo Paciente</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">No hay pacientes registrados actualmente.</div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover table-bordered shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Teléfono</th>
+                    <th class="text-center" style="width: 25%;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.IdPaciente</td>
+                        <td>@p.Nombre</td>
+                        <td>@p.Telefono</td>
+                        <td class="text-center">
+                            <a asp-action="Details" asp-route-id="@p.IdPaciente" class="btn btn-info btn-sm">Ver</a>
+                            <a asp-action="Edit" asp-route-id="@p.IdPaciente" class="btn btn-warning btn-sm">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@p.IdPaciente" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
