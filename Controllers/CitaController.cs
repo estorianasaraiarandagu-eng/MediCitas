@@ -1,5 +1,8 @@
+// ==========================================
+// ARCHIVO: Controllers/CitaController.cs
+// ==========================================
 using Microsoft.AspNetCore.Mvc;
-using MySqlConnector; // <-- AQUí ESTÁ LA CLAVE: Usamos MySqlConnector
+using MySqlConnector;
 using MediCitas.Models;
 using System.Data;
 
@@ -7,7 +10,8 @@ namespace MediCitas.Controllers
 {
     public class CitaController : Controller
     {
-        private readonly string _connectionString = "Server=localhost;Database=citas_medicas_db;Uid=root;Pwd=rootpassword;";
+        // Conexión configurada directamente con tu base de datos en Aiven
+        private readonly string _connectionString = "Server=mysql-208cce03-unifranz-c0b4.g.aivencloud.com;Port=20872;Database=defaultdb;Uid=avnadmin;Pwd=AQUI_TU_CONTRASENA;SslMode=Required;";
 
         public IActionResult IndexAgendadas()
         {
