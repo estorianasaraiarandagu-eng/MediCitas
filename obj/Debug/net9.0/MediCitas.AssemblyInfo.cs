@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MediCitas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+501aef97c894c9a523186008ee7a6bcf9661e5cf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e87db02cc44841e84324f0d03a3b716699da4b16")]
 [assembly: System.Reflection.AssemblyProductAttribute("MediCitas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MediCitas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
